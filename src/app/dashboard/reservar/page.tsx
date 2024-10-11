@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-	Select, 
+import {
+	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
@@ -27,14 +27,15 @@ import { CircleUser, Settings2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import useCitaStore from "@/hooks/data/citas";
+import { useConfig } from "@/hooks/config";
 
 const Dashboard: React.FC = () => {
 	const [especialidad, setEspecialidad] = useState<string>("");
 	const [medico, setMedico] = useState<string>("");
 
 	const { citas, setCitas } = useCitaStore();
-	const [altoContraste, setAltoContraste] = useState(false);
-	const [texto, setTexto] = useState<string>("");
+	const { config, setFontSize, toggleAltoContraste, toggleAuxVoz } =
+		useConfig();
 
 	const handleReservar = () => {
 		console.log(citas.length);
@@ -49,52 +50,31 @@ const Dashboard: React.FC = () => {
 		]);
 
 		alert("Cita reservada correctamente");
-	}
+	};
 
 	const handleSwitchChange = () => {
-		setAltoContraste(!altoContraste);
-	}
+		toggleAltoContraste();
+	};
 
-	const handleSelectChange = (value: string) => {
-		setTexto(value);
-	  };
-
+	const handleSelectChange = (value: "Normal" | "Grande" | "Muy Grande") => {
+		console.log(value);
+		setFontSize(value);
+	};
 
 	return (
-		<div className={`flex min-h-screen ${altoContraste ? 'bg-black text-white' : 'bg-blue-400'}`}>
+		<div
+			className={`flex min-h-screen ${config.altoContraste ? "bg-black text-white" : "bg-blue-400"}`}
+		>
 			{/* Menú Lateral */}
-			<aside className={`w-64 p-4 shadow-md ${altoContraste ? 'bg-gray-800' : 'bg-gray-200'}`}>
-				<div className="text-center mb-8">
-					<h1 className={`text-2xl font-bold ${altoContraste ? 'text-white' : 'text-gray-700'}`}>HMC</h1>
-				</div>
-				<nav className="space-y-4">
-					<a
-						href="/dashboard"
-						className={`block p-2 rounded-md ${altoContraste ? 'text-white hover:bg-gray-700' : 'text-gray-700 hover:bg-blue-100'} ${texto === 'normal' ? '' : texto === 'grande' ? 'text-3xl' : 'text-4xl'}`}
-					>
-						Inicio
-					</a>
-					<a
-						href="/dashboard/reservar"
-						className={`block p-2 rounded-md ${altoContraste ? 'text-white hover:bg-gray-700' : 'text-gray-700 hover:bg-blue-100'} ${texto === 'normal' ? '' : texto === 'grande' ? 'text-3xl' : 'text-4xl'}`}
-					>
-						Citas
-					</a>
-					<a
-						href="/dashboard/citas"
-						className={`block p-2 rounded-md ${altoContraste ? 'text-white hover:bg-gray-700' : 'text-gray-700 hover:bg-blue-100'} ${texto === 'normal' ? '' : texto === 'grande' ? 'text-3xl' : 'text-4xl'}`}
-					>
-						Mis Citas
-					</a>
-				</nav>
-			</aside>
 
 			{/* Contenido Principal */}
 			<main className="flex-1 p-8">
 				<Card className="mb-8 h-fit">
 					<CardHeader className="py-4">
 						<CardTitle className="flex justify-between">
-							<p className={`text-center content-center ${texto === 'normal' ? '' : texto === 'grande' ? 'text-3xl' : 'text-4xl'}`}>
+							<p
+								className={`text-center content-center ${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-3xl" : "text-4xl"}`}
+							>
 								Panel de Reserva de Citas Médicas
 							</p>
 							<div className="flex">
@@ -111,20 +91,24 @@ const Dashboard: React.FC = () => {
 												<Label htmlFor="name" className="text-right">
 													Alto contraste
 												</Label>
-												<Switch id="name" checked={altoContraste} onCheckedChange={handleSwitchChange} />
+												<Switch
+													id="name"
+													checked={config.altoContraste}
+													onCheckedChange={handleSwitchChange}
+												/>
 											</div>
 											<div className="grid grid-cols-4 items-center gap-4">
 												<Label htmlFor="username" className="text-right">
 													Tamaño del Texto
 												</Label>
-												<Select onValueChange={handleSelectChange} >
+												<Select onValueChange={handleSelectChange}>
 													<SelectTrigger className="w-36">
 														<SelectValue placeholder="Seleccionar una opción" />
 													</SelectTrigger>
 													<SelectContent>
-														<SelectItem value="normal">Normal</SelectItem>
-														<SelectItem value="grande">Grande</SelectItem>
-														<SelectItem value="muygrande">
+														<SelectItem value="Normal">Normal</SelectItem>
+														<SelectItem value="Grande">Grande</SelectItem>
+														<SelectItem value="Muy Grande">
 															Muy Grande
 														</SelectItem>
 													</SelectContent>
@@ -140,10 +124,16 @@ const Dashboard: React.FC = () => {
 				</Card>
 				<Card className="mb-8">
 					<CardHeader>
-						<CardTitle className={`${texto === 'normal' ? '' : texto === 'grande' ? 'text-3xl' : 'text-4xl'}`}>Programación Médica</CardTitle>
+						<CardTitle
+							className={`${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-3xl" : "text-4xl"}`}
+						>
+							Programación Médica
+						</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<p className={`mb-4 text-gray-600 ${texto === 'normal' ? '' : texto === 'grande' ? 'text-2xl' : 'text`xl'}`}>
+						<p
+							className={`mb-4 text-gray-600 ${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-2xl" : "text`xl"}`}
+						>
 							Con el objetivo de brindar una mejor atención en consulta externa,
 							el sistema solo permitirá reservar una cita por día.
 						</p>
@@ -151,7 +141,7 @@ const Dashboard: React.FC = () => {
 							<div>
 								<label
 									htmlFor="especialidad"
-									className={`block mb-2 font-medium text-gray-700 ${texto === 'normal' ? '' : texto === 'grande' ? 'text-2xl' : 'text`xl'}`}
+									className={`block mb-2 font-medium text-gray-700 ${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-2xl" : "text`xl"}`}
 								>
 									Especialidad:
 								</label>
@@ -257,7 +247,11 @@ const Dashboard: React.FC = () => {
 				{/* Tabla de Citas Disponibles */}
 				<Card>
 					<CardHeader>
-						<CardTitle className={`${texto === 'normal' ? '' : texto === 'grande' ? 'text-3xl' : 'text-4xl'}`}>Fechas Disponibles</CardTitle>
+						<CardTitle
+							className={`${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-3xl" : "text-4xl"}`}
+						>
+							Fechas Disponibles
+						</CardTitle>
 					</CardHeader>
 					<CardContent>
 						<table className="min-w-full table-auto border-collapse">

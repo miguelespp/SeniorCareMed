@@ -1,16 +1,17 @@
-'use client';
+"use client";
 
-
+/* 
 import React, { useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@//components/ui/input';
 import { Mail, KeyRound } from 'lucide-react';
 
-const Login = () => {
+const Login: React.FC = () => {
   // Estados para los campos de entrada
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  
 
   // Manejo de envío del formulario
   const handleSubmit = (event: React.FormEvent) => {
@@ -78,5 +79,11 @@ const Login = () => {
   );
 };
 
+export default Login; */
+
+const Login: React.FC = () => {
+  return (
+    <h3>Hola</h3>
+  )};
+
 export default Login;
-``
