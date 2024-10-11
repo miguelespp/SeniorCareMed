@@ -83,7 +83,10 @@ export default Login; */
 
 const Login: React.FC = () => {
   return (
-    <h3>Hola</h3>
+    <>
+      <p>Hola</p>
+      <a href="/dashboard">Ir a demo</a>
+    </>
   )};
 
 export default Login;

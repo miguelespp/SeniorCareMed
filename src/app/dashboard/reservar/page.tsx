@@ -37,6 +37,14 @@ const Dashboard: React.FC = () => {
 	const { config, setFontSize, toggleAltoContraste, toggleAuxVoz } =
 		useConfig();
 
+	const speakText = (text: string) => {
+		if (config.auxVoz) {
+			const synth = window.speechSynthesis;
+			const utterThis = new SpeechSynthesisUtterance(text);
+			synth.speak(utterThis);
+		}
+	}
+
 	const handleReservar = () => {
 		console.log(citas.length);
 		setCitas([
@@ -61,6 +69,10 @@ const Dashboard: React.FC = () => {
 		setFontSize(value);
 	};
 
+	const handleVozChange = () => {
+		toggleAuxVoz();
+	}
+
 	return (
 		<div
 			className={`flex min-h-screen ${config.altoContraste ? "bg-black text-white" : "bg-blue-400"}`}
@@ -78,45 +90,55 @@ const Dashboard: React.FC = () => {
 								Panel de Reserva de Citas Médicas
 							</p>
 							<div className="flex">
-								<Sheet>
-									<SheetTrigger asChild>
-										<Button variant="outline" className="mr-2">
-											<Settings2 />
-										</Button>
-									</SheetTrigger>
-									<SheetContent>
-										<SheetTitle>Configuración</SheetTitle>
-										<div className="grid gap-4 py-4">
-											<div className="grid grid-cols-4 items-center gap-4">
-												<Label htmlFor="name" className="text-right">
-													Alto contraste
-												</Label>
-												<Switch
-													id="name"
-													checked={config.altoContraste}
-													onCheckedChange={handleSwitchChange}
-												/>
-											</div>
-											<div className="grid grid-cols-4 items-center gap-4">
-												<Label htmlFor="username" className="text-right">
-													Tamaño del Texto
-												</Label>
-												<Select onValueChange={handleSelectChange}>
-													<SelectTrigger className="w-36">
-														<SelectValue placeholder="Seleccionar una opción" />
-													</SelectTrigger>
-													<SelectContent>
-														<SelectItem value="Normal">Normal</SelectItem>
-														<SelectItem value="Grande">Grande</SelectItem>
-														<SelectItem value="Muy Grande">
-															Muy Grande
-														</SelectItem>
-													</SelectContent>
-												</Select>
-											</div>
-										</div>
-									</SheetContent>
-								</Sheet>
+							<Sheet>
+			<SheetTrigger asChild>
+				<Button variant="outline" className="mr-2">
+					<Settings2 />
+				</Button>
+			</SheetTrigger>
+			<SheetContent>
+				<SheetTitle>Configuración</SheetTitle>
+				<div className="grid gap-4 py-4">
+					<div className="grid grid-cols-4 items-center gap-4">
+						<Label htmlFor="name" className="text-right">
+							Alto contraste
+						</Label>
+						<Switch
+							id="name"
+							checked={config.altoContraste}
+							onCheckedChange={handleSwitchChange}
+						/>
+					</div>
+					<div className="grid grid-cols-4 items-center gap-4">
+						<Label htmlFor="username" className="text-right">
+							Tamaño del Texto
+						</Label>
+						<Select onValueChange={handleSelectChange}>
+							<SelectTrigger className="w-36">
+								<SelectValue placeholder="Seleccionar una opción" />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value="Normal">Normal</SelectItem>
+								<SelectItem value="Grande">Grande</SelectItem>
+								<SelectItem value="Muy Grande">Muy Grande</SelectItem>
+							</SelectContent>
+						</Select>
+					</div>
+					<div>
+						<Label
+							htmlFor="username"
+							className="text-right"
+							onMouseEnter={() =>
+								speakText("Un asistente para navegar por la pagina")
+							}
+						>
+							Asistente de Voz
+						</Label>
+						<Switch id="username" onCheckedChange={handleVozChange} />
+					</div>
+				</div>
+			</SheetContent>
+		</Sheet>
 								<CircleUser className="size-8" />
 							</div>
 						</CardTitle>

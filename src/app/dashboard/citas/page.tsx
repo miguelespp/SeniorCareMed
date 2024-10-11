@@ -28,6 +28,14 @@ const MisCitas = () => {
 	const { citas, setCitas } = useCitaStore();
 	const {config, setFontSize, toggleAltoContraste, toggleAuxVoz} = useConfig();
 
+	const speakText = (text: string) => {
+		if (config.auxVoz) {
+			const synth = window.speechSynthesis;
+			const utterThis = new SpeechSynthesisUtterance(text);
+			synth.speak(utterThis);
+		}
+	}
+
 	const handleEditar = (id: number) => {
 		console.log(citas.length);
 		alert(`Editar la cita con ID: ${id}`);
@@ -44,6 +52,11 @@ const MisCitas = () => {
 	const handleSwitchChange = () => {
 		toggleAltoContraste();
 	};
+
+	const handleVozChange = () => {
+		toggleAuxVoz();
+	}
+
 	const handleSelectChange = (value: "Normal" | "Grande" | "Muy Grande") => {
 		setFontSize(value);
 	};
@@ -62,7 +75,7 @@ const MisCitas = () => {
 							</p>
 							<div className="flex">
 								<Sheet>
-									<SheetTrigger asChild>
+									<SheetTrigger asChild onMouseEnter={() => speakText('Panel de accesibilidad')}>
 										<Button variant="outline" className="mr-2">
 											<Settings2 />
 										</Button>
@@ -71,7 +84,7 @@ const MisCitas = () => {
 										<SheetTitle>Configuración</SheetTitle>
 										<div className="grid gap-4 py-4">
 											<div className="grid grid-cols-4 items-center gap-4">
-												<Label htmlFor="name" className="text-right">
+												<Label htmlFor="name" className="text-right" onMouseEnter={() => speakText("Resalta lo importante")}>
 													Alto contraste
 												</Label>
 												<Switch
@@ -81,7 +94,7 @@ const MisCitas = () => {
 												/>
 											</div>
 											<div className="grid grid-cols-4 items-center gap-4">
-												<Label htmlFor="username" className="text-right">
+												<Label htmlFor="username" className="text-right" onMouseEnter={() => speakText("Configure de acuerdo a su vision")}>
 													Tamaño del Texto
 												</Label>
 												<Select onValueChange={handleSelectChange}>
@@ -98,10 +111,10 @@ const MisCitas = () => {
 												</Select>
 											</div>
 											<div>
-												<Label htmlFor="username" className="text-right">
+												<Label htmlFor="username" className="text-right" onMouseEnter={() => speakText('Un asistente para navegar por la pagina')}>
 													Asistente de Voz
 												</Label>
-												<Switch id="username" />
+												<Switch id="username" onCheckedChange={handleVozChange} />
 											</div>
 										</div>
 									</SheetContent>
