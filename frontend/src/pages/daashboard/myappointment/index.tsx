@@ -4,17 +4,18 @@ import { CircleUser, PencilLine, Trash2 } from "lucide-react";
 import useCitaStore from "@/store/data/citas";
 import { useConfig } from "@/store/config";
 import SheetAccess from "@/components/dashboard/AccessPanel";
+import { speakTextCustom } from "@/lib/queueVoice";
+import useMedicoStore from "@/store/data/medicos";
 
 const MyAppointments = () => {
   // Datos simulados de citas reservadas por el usuario
   const { citas, setCitas } = useCitaStore();
+  const { medicos } = useMedicoStore();
   const { config } = useConfig();
 
   const speakText = (text: string) => {
     if (config.auxVoz) {
-      const synth = window.speechSynthesis;
-      const utterThis = new SpeechSynthesisUtterance(text);
-      synth.speak(utterThis);
+      speakTextCustom(text);
     }
   };
 
@@ -75,9 +76,12 @@ const MyAppointments = () => {
                 {citas.length > 0 ? (
                   citas.map((cita) => (
                     <tr key={cita.id} className="border-b">
-                      <td className="p-4">{cita.fecha}</td>
+                      <td className="p-4">{cita.fecha.toDateString()}</td>
                       <td className="p-4">{cita.especialidad}</td>
-                      <td className="p-4">{cita.medico}</td>
+                      <td className="p-4">
+                        {medicos.find((medico) => medico.id === cita.medico)
+                          ?.name || "no encontrado"}
+                      </td>
                       <td className="p-4 space-x-2 flex justify-center">
                         <Button
                           onClick={() => handleEditar(cita.id)}

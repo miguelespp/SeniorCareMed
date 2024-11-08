@@ -20,41 +20,35 @@ import { CircleUser } from "lucide-react";
 import useCitaStore from "@/store/data/citas";
 import { useConfig } from "@/store/config";
 import SheetAccess from "@/components/dashboard/AccessPanel";
+import { Calendar } from "@/components/ui/calendar";
+import useMedicoStore from "@/store/data/medicos";
+import type { Medico } from "@/store/data/medicos";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
+import { Slider } from "@/components/ui/slider";
+import { speakTextCustom } from "@/lib/queueVoice";
 
 const Appointments = () => {
   const [especialidad, setEspecialidad] = useState<string>("");
-  const [medico, setMedico] = useState<string>("");
+  const [medico, setMedico] = useState<Medico | null>(null);
 
   const { citas, setCitas } = useCitaStore();
+  const { medicos } = useMedicoStore();
   const { config } = useConfig();
 
-  let lastExecutionTime = 0;
-  const throttleInterval = 2000;
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const { toast } = useToast();
+  const [hora, setHora] = useState<number[]>([0]);
 
-  const speakText = (text: string) => {
-    const now = Date.now();
-    if (config.auxVoz && now - lastExecutionTime > throttleInterval) {
-      lastExecutionTime = now;
-      const synth = window.speechSynthesis;
-      const utterThis = new SpeechSynthesisUtterance(text);
-      const voices = synth.getVoices();
-
-      utterThis.voice =
-        voices.find((voice) => voice.lang === "es-PE") ||
-        voices.find((voice) => voice.lang.startsWith("es")) ||
-        voices[0];
-
-      utterThis.rate = 1;
-      utterThis.pitch = 1;
-      utterThis.volume = 1;
-
-      synth.speak(utterThis);
+  const speak = (text: string) => {
+    if (config.auxVoz) {
+      speakTextCustom(text);
     }
   };
 
   const handleReservar = () => {
     console.log(citas.length);
-    if (especialidad === "" || medico === "") {
+    if (especialidad === "" || medico === null || date === undefined) {
       alert("Debe seleccionar una especialidad y un médico");
       return;
     }
@@ -62,13 +56,23 @@ const Appointments = () => {
       ...citas,
       {
         id: citas.length + 1,
-        fecha: "19/03/2024",
+        fecha: date,
         especialidad: especialidad,
-        medico: medico,
+        medico: medico.id,
+        hora: hora[0],
       },
     ]);
 
-    alert("Cita reservada correctamente");
+    // alert("Cita reservada correctamente");
+  };
+
+  const HandleMedicoChange = (medicoId: string) => {
+    const selectedMedico = medicos.find(
+      (m) => m.id === Number.parseInt(medicoId),
+    );
+    if (selectedMedico) {
+      setMedico(selectedMedico);
+    }
   };
 
   return (
@@ -81,12 +85,12 @@ const Appointments = () => {
       <main className="flex-1 p-8">
         <Card className="mb-8 h-fit">
           <CardHeader className="py-4">
-            <CardTitle
-              className="flex justify-between"
-              onMouseEnter={() => speakText("hola causa")}
-            >
+            <CardTitle className="flex justify-between">
               <p
                 className={`text-center content-center ${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-3xl" : "text-4xl"}`}
+                onMouseEnter={() =>
+                  speak("Bienvenido al panel de reserva de citas médicas")
+                }
               >
                 Panel de Reserva de Citas Médicas
               </p>
@@ -133,9 +137,12 @@ const Appointments = () => {
                     <div className="flex flex-wrap justify-around mt-2 space-y-2">
                       <Button
                         className="size-fit p-0 bg-white"
-                        onClick={() => setEspecialidad("Gastroentorologia")}
+                        onClick={() => setEspecialidad("Gastroenterología")}
                       >
-                        <Card className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-white flex-1">
+                        <Card
+                          className="w-60 max-w-md p-2 shadow-lg rounded-lg flex-1 bg-red-400"
+                          onMouseEnter={() => speak("Gastroenterología")}
+                        >
                           <CardHeader className="mb-4 text-center">
                             <CardTitle className="text-2xl font-bold text-gray-800">
                               Gastroentorologia
@@ -147,7 +154,10 @@ const Appointments = () => {
                         className="size-fit p-0 bg-white"
                         onClick={() => setEspecialidad("Cardiología")}
                       >
-                        <Card className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-white flex-1">
+                        <Card
+                          className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-blue-500 flex-1"
+                          onMouseEnter={() => speak("Cardiología")}
+                        >
                           <CardHeader className="mb-4 text-center">
                             <CardTitle className="text-2xl font-bold text-gray-800">
                               Cardiologia
@@ -157,12 +167,15 @@ const Appointments = () => {
                       </Button>
                       <Button
                         className="size-fit p-0 bg-white"
-                        onClick={() => setEspecialidad("Pediatria")}
+                        onClick={() => setEspecialidad("Pediatría")}
                       >
-                        <Card className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-white flex-1">
+                        <Card
+                          className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-gray-500 flex-1"
+                          onMouseEnter={() => speak("Pediatría")}
+                        >
                           <CardHeader className="mb-4 text-center">
                             <CardTitle className="text-2xl font-bold text-gray-800">
-                              Pediatria
+                              Pediatría
                             </CardTitle>
                           </CardHeader>
                         </Card>
@@ -171,7 +184,10 @@ const Appointments = () => {
                         className="size-fit p-0 bg-white"
                         onClick={() => setEspecialidad("Traumatismo")}
                       >
-                        <Card className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-white flex-1">
+                        <Card
+                          className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-green-400 flex-1"
+                          onMouseEnter={() => speak("Traumatismo")}
+                        >
                           <CardHeader className="mb-4 text-center">
                             <CardTitle className="text-2xl font-bold text-gray-800">
                               Traumatismo
@@ -190,69 +206,87 @@ const Appointments = () => {
                 >
                   Médicos:
                 </label>
-                <Select value={medico} onValueChange={(e) => setMedico(e)}>
-                  <SelectTrigger className="w-fit self-center">
+                <Select onValueChange={HandleMedicoChange}>
+                  <SelectTrigger
+                    className="w-fit self-center"
+                    onMouseEnter={() => speak("Seleccione un doctor")}
+                  >
                     <SelectValue
-                      placeholder={medico || "Seleccionar una opción"}
+                      placeholder={medico?.name || "Seleccionar una opción"}
                     />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Dr. Juan Pérez">
-                      Dr. Juan Pérez
-                    </SelectItem>
-                    <SelectItem value="Dra. Ana Gómez">
-                      Dra. Ana Gómez
-                    </SelectItem>
-                    <SelectItem value="Dr. Carlos Sánchez">
-                      Dr. Carlos Sánchez
-                    </SelectItem>
+                    {medicos
+                      .filter((medico) => medico.especialidad === especialidad)
+                      .map((medico) => (
+                        <SelectItem
+                          key={medico.id}
+                          value={medico.id.toString()}
+                        >
+                          {medico.name}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
             </div>
           </CardContent>
         </Card>
-
-        {/* Tabla de Citas Disponibles */}
         <Card>
-          <CardHeader>
-            <CardTitle
-              className={`${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-3xl" : "text-4xl"}`}
-            >
-              Fechas Disponibles
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <table className="min-w-full table-auto border-collapse">
-              <thead>
-                <tr>
-                  <th className="border-b-2 p-3">Fecha</th>
-                  <th className="border-b-2 p-3">Servicio</th>
-                  <th className="border-b-2 p-3">Cupos</th>
-                  <th className="border-b-2 p-3">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="border-b p-3">19/03/2024</td>
-                  <td className="border-b p-3">Anestesiología</td>
-                  <td className="border-b p-3">13</td>
-                  <td className="border-b p-3">
-                    <Button
-                      className="bg-blue-600 text-white rounded-md px-4 py-2"
-                      onClick={() => {
-                        handleReservar();
-                      }}
-                    >
-                      Reservar
-                    </Button>
-                  </td>
-                </tr>
-                {/* Agregar más filas según sea necesario */}
-              </tbody>
-            </table>
+          <CardContent className="flex justify-around">
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              fromDate={new Date()}
+              className="fit-content w-60"
+              disabled={(date) => {
+                return !medico?.diasLaborales.includes(date.getDay());
+              }}
+            />
+            <div className="flex flex-col justify-center">
+              {/* poner un mensaje que indique que deben llegar 15 minutos antes de preferencia  */}
+
+              <label
+                htmlFor="hora"
+                className="block mb-2 font-medium text-gray-700 text-left text-xl"
+              >
+                Hora: {hora} : 00
+              </label>
+
+              <Slider
+                value={hora}
+                onValueChange={setHora}
+                min={medico?.horaInicio || 8}
+                max={medico?.horaFin || 18}
+                step={1}
+                disabled={!medico}
+                className="mt-4 w-32"
+              />
+              <label
+                htmlFor="hora"
+                className="block mt-2 font-medium text-left text-red-400 text-sm"
+              >
+                *LLegar 15 minutos antes de preferencia
+              </label>
+            </div>
           </CardContent>
         </Card>
+        <Button
+          className="bg-blue-600 text-white rounded-md px-4 py-2 mt-4"
+          onClick={() => {
+            handleReservar();
+            toast({
+              title: "Scheduled: Catch up ",
+              description: "Friday, February 10, 2023 at 5:57 PM",
+              action: (
+                <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
+              ),
+            });
+          }}
+        >
+          Reservar
+        </Button>
       </main>
     </div>
   );
