@@ -89,7 +89,11 @@ const SheetAccess = () => {
               >
                 Asistente de Voz
               </Label>
-              <Switch id="username" onCheckedChange={handleVozChange} />
+              <Switch
+                id="username"
+                checked={config.auxVoz}
+                onCheckedChange={handleVozChange}
+              />
             </div>
           </div>
         </SheetContent>

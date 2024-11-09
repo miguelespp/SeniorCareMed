@@ -15,7 +15,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { CircleUser } from "lucide-react";
+import {
+  Calendar1,
+  CircleUser,
+  GraduationCap,
+  Stethoscope,
+} from "lucide-react";
 
 import useCitaStore from "@/store/data/citas";
 import { useConfig } from "@/store/config";
@@ -120,9 +125,9 @@ const Appointments = () => {
               <div>
                 <label
                   htmlFor="especialidad"
-                  className={`block mb-2 font-medium text-gray-700 ${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-2xl" : "text`xl"}`}
+                  className={`flex justify-center space-x-2 mb-2 font-medium text-gray-700 ${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-2xl" : "text`xl"}`}
                 >
-                  Especialidad:
+                  <span>Especialidad</span> <GraduationCap />
                 </label>
                 <Dialog>
                   <DialogTrigger asChild>
@@ -202,9 +207,9 @@ const Appointments = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="medico"
-                  className="block mb-2 font-medium text-gray-700"
+                  className="flex space-x-2 justify-center mb-2 font-medium text-gray-700"
                 >
-                  Médicos:
+                  <span>Médicos </span> <Stethoscope />
                 </label>
                 <Select onValueChange={HandleMedicoChange}>
                   <SelectTrigger
@@ -234,16 +239,21 @@ const Appointments = () => {
         </Card>
         <Card>
           <CardContent className="flex justify-around">
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              fromDate={new Date()}
-              className="fit-content w-60"
-              disabled={(date) => {
-                return !medico?.diasLaborales.includes(date.getDay());
-              }}
-            />
+            <div className="mt-4">
+              <p className="flex space-x-2 justify-center">
+                <span>Horarios Disponibles</span> <Calendar1 />
+              </p>
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                fromDate={new Date()}
+                className="fit-content w-60"
+                disabled={(date) => {
+                  return !medico?.diasLaborales.includes(date.getDay());
+                }}
+              />
+            </div>
             <div className="flex flex-col justify-center">
               {/* poner un mensaje que indique que deben llegar 15 minutos antes de preferencia  */}
 
