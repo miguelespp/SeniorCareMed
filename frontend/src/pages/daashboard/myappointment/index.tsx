@@ -78,7 +78,9 @@ const MyAppointments = () => {
                 {citas.length > 0 ? (
                   citas.map((cita) => (
                     <tr key={cita.id} className="border-b">
-                      <td className="p-4">{cita.fecha.toDateString()}</td>
+                      <td className="p-4">
+                        {`${cita.fecha.toDateString()} - ${cita.hora} :00 hrs.`}
+                      </td>
                       <td className="p-4">{cita.especialidad}</td>
                       <td className="p-4">
                         {medicos.find((medico) => medico.id === cita.medico)

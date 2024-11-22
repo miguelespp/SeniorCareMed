@@ -169,9 +169,13 @@ const Appointments = () => {
                       {especialidad || "Seleccionar una opción"}
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-[40rem] bg-gray-200">
+                  <DialogContent
+                    className={`max-w-[40rem] ${config.altoContraste ? "bg-gray-800" : "bg-gray-200"} `}
+                  >
                     <DialogHeader>
-                      <DialogTitle className="text-gray-900">
+                      <DialogTitle
+                        className={`${config.altoContraste ? "text-gray-200" : "text-gray-600"} `}
+                      >
                         Seleccionar Especialidad
                       </DialogTitle>
                     </DialogHeader>
@@ -202,6 +206,36 @@ const Appointments = () => {
                           <CardHeader className="mb-4 text-center">
                             <CardTitle className="text-2xl font-bold text-white">
                               Cardiología
+                            </CardTitle>
+                          </CardHeader>
+                        </Card>
+                      </Button>
+                      <Button
+                        className="size-fit p-0 bg-white"
+                        onClick={() => setEspecialidad("Pediatría")}
+                      >
+                        <Card
+                          className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-gray-500 hover:bg-gray-600 flex-1"
+                          onMouseEnter={() => speak("Pediatría")}
+                        >
+                          <CardHeader className="mb-4 text-center">
+                            <CardTitle className="text-2xl font-bold text-gray-800">
+                              Pediatría
+                            </CardTitle>
+                          </CardHeader>
+                        </Card>
+                      </Button>
+                      <Button
+                        className="size-fit p-0 bg-white"
+                        onClick={() => setEspecialidad("Traumatismo")}
+                      >
+                        <Card
+                          className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-green-400 hover:bg-green-600 flex-1"
+                          onMouseEnter={() => speak("Traumatismo")}
+                        >
+                          <CardHeader className="mb-4 text-center">
+                            <CardTitle className="text-2xl font-bold text-gray-800">
+                              Traumatismo
                             </CardTitle>
                           </CardHeader>
                         </Card>
