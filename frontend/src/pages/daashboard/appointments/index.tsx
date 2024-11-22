@@ -18,6 +18,7 @@ import {
 import {
   Calendar1,
   CircleUser,
+  Clock9,
   GraduationCap,
   Stethoscope,
 } from "lucide-react";
@@ -82,17 +83,29 @@ const Appointments = () => {
 
   return (
     <div
-      className={`flex min-h-screen ${config.altoContraste ? "bg-black text-white" : "bg-blue-400"}`}
+      className={`flex min-h-screen ${
+        config.altoContraste
+          ? "bg-black text-white border border-gray-300"
+          : "bg-blue-400"
+      }`}
     >
       {/* Menú Lateral */}
 
       {/* Contenido Principal */}
       <main className="flex-1 p-8">
-        <Card className="mb-8 h-fit">
+        <Card
+          className={`mb-8 h-fit ${config.altoContraste ? "bg-gray-800 text-white " : ""} rounded-lg shadow-lg`}
+        >
           <CardHeader className="py-4">
             <CardTitle className="flex justify-between">
               <p
-                className={`text-center content-center ${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-3xl" : "text-4xl"}`}
+                className={`text-center content-center ${
+                  config.fontSize === "Normal"
+                    ? "text-lg"
+                    : config.fontSize === "Grande"
+                      ? "text-3xl"
+                      : "text-4xl"
+                }`}
                 onMouseEnter={() =>
                   speak("Bienvenido al panel de reserva de citas médicas")
                 }
@@ -106,17 +119,29 @@ const Appointments = () => {
             </CardTitle>
           </CardHeader>
         </Card>
-        <Card className="mb-8">
+        <Card className="mb-8 bg-gray-100 rounded-lg shadow-md">
           <CardHeader>
             <CardTitle
-              className={`${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-3xl" : "text-4xl"}`}
+              className={`text-gray-800 ${
+                config.fontSize === "Normal"
+                  ? "text-xl"
+                  : config.fontSize === "Grande"
+                    ? "text-3xl"
+                    : "text-4xl"
+              }`}
             >
               Programación Médica
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p
-              className={`mb-4 text-gray-600 ${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-2xl" : "text`xl"}`}
+              className={`mb-4 text-gray-800 ${
+                config.fontSize === "Normal"
+                  ? "text-base"
+                  : config.fontSize === "Grande"
+                    ? "text-2xl"
+                    : "text-xl"
+              }`}
             >
               Con el objetivo de brindar una mejor atención en consulta externa,
               el sistema solo permitirá reservar una cita por día.
@@ -125,77 +150,58 @@ const Appointments = () => {
               <div>
                 <label
                   htmlFor="especialidad"
-                  className={`flex justify-center space-x-2 mb-2 font-medium text-gray-700 ${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-2xl" : "text`xl"}`}
+                  className={`flex justify-center space-x-2 mb-2 font-medium text-gray-900 ${
+                    config.fontSize === "Normal"
+                      ? "text-base"
+                      : config.fontSize === "Grande"
+                        ? "text-2xl"
+                        : "text-xl"
+                  }`}
                 >
                   <span>Especialidad</span> <GraduationCap />
                 </label>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button variant="outline">
+                    <Button
+                      variant="outline"
+                      className="bg-blue-700 hover:bg-blue-800 text-white"
+                    >
                       {especialidad || "Seleccionar una opción"}
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-[40rem]">
+                  <DialogContent className="max-w-[40rem] bg-gray-200">
                     <DialogHeader>
-                      <DialogTitle>Seleccionar Especialidad</DialogTitle>
+                      <DialogTitle className="text-gray-900">
+                        Seleccionar Especialidad
+                      </DialogTitle>
                     </DialogHeader>
                     <div className="flex flex-wrap justify-around mt-2 space-y-2">
                       <Button
-                        className="size-fit p-0 bg-white"
+                        className="size-fit p-0 bg-white hover:bg-gray-100"
                         onClick={() => setEspecialidad("Gastroenterología")}
                       >
                         <Card
-                          className="w-60 max-w-md p-2 shadow-lg rounded-lg flex-1 bg-red-400"
+                          className="w-60 max-w-md p-2 shadow-lg rounded-lg flex-1 bg-red-500 hover:bg-red-600"
                           onMouseEnter={() => speak("Gastroenterología")}
                         >
                           <CardHeader className="mb-4 text-center">
-                            <CardTitle className="text-2xl font-bold text-gray-800">
-                              Gastroentorologia
+                            <CardTitle className="text-2xl font-bold text-white">
+                              Gastroenterología
                             </CardTitle>
                           </CardHeader>
                         </Card>
                       </Button>
                       <Button
-                        className="size-fit p-0 bg-white"
+                        className="size-fit p-0 bg-white hover:bg-gray-100"
                         onClick={() => setEspecialidad("Cardiología")}
                       >
                         <Card
-                          className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-blue-500 flex-1"
+                          className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-blue-500 hover:bg-blue-600 flex-1"
                           onMouseEnter={() => speak("Cardiología")}
                         >
                           <CardHeader className="mb-4 text-center">
-                            <CardTitle className="text-2xl font-bold text-gray-800">
-                              Cardiologia
-                            </CardTitle>
-                          </CardHeader>
-                        </Card>
-                      </Button>
-                      <Button
-                        className="size-fit p-0 bg-white"
-                        onClick={() => setEspecialidad("Pediatría")}
-                      >
-                        <Card
-                          className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-gray-500 flex-1"
-                          onMouseEnter={() => speak("Pediatría")}
-                        >
-                          <CardHeader className="mb-4 text-center">
-                            <CardTitle className="text-2xl font-bold text-gray-800">
-                              Pediatría
-                            </CardTitle>
-                          </CardHeader>
-                        </Card>
-                      </Button>
-                      <Button
-                        className="size-fit p-0 bg-white"
-                        onClick={() => setEspecialidad("Traumatismo")}
-                      >
-                        <Card
-                          className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-green-400 flex-1"
-                          onMouseEnter={() => speak("Traumatismo")}
-                        >
-                          <CardHeader className="mb-4 text-center">
-                            <CardTitle className="text-2xl font-bold text-gray-800">
-                              Traumatismo
+                            <CardTitle className="text-2xl font-bold text-white">
+                              Cardiología
                             </CardTitle>
                           </CardHeader>
                         </Card>
@@ -207,13 +213,13 @@ const Appointments = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="medico"
-                  className="flex space-x-2 justify-center mb-2 font-medium text-gray-700"
+                  className="flex space-x-2 justify-center mb-2 font-medium text-gray-900"
                 >
-                  <span>Médicos </span> <Stethoscope />
+                  <span>Médicos</span> <Stethoscope />
                 </label>
                 <Select onValueChange={HandleMedicoChange}>
                   <SelectTrigger
-                    className="w-fit self-center"
+                    className="w-fit self-center bg-gray-100 border border-gray-400 focus:outline-blue-500 hover:bg-gray-200"
                     onMouseEnter={() => speak("Seleccione un doctor")}
                   >
                     <SelectValue
@@ -237,10 +243,10 @@ const Appointments = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gray-100 rounded-lg shadow-md">
           <CardContent className="flex justify-around">
             <div className="mt-4">
-              <p className="flex space-x-2 justify-center">
+              <p className="flex space-x-2 justify-center text-gray-800 font-medium">
                 <span>Horarios Disponibles</span> <Calendar1 />
               </p>
               <Calendar
@@ -248,22 +254,39 @@ const Appointments = () => {
                 selected={date}
                 onSelect={setDate}
                 fromDate={new Date()}
-                className="fit-content w-60"
+                className={`fit-content w-fit border border-gray-300 mt-4 rounded-xl ${config.altoContraste ? "bg-gray-900 text-white" : "bg-gray-200 text-black"}`}
+                classNames={
+                  config.altoContraste
+                    ? {
+                        day: "h-10 w-10 p-0 font-normal",
+                        day_selected: "bg-gray-500 text-white",
+                        day_today: "border border-blue-500 text-white",
+                        day_outside: "text-gray-700",
+                        day_disabled: "text-gray-500 cursor-not-allowed",
+                        nav_button:
+                          "text-gray-300 hover:bg-gray-200 focus:outline-blue-500",
+                        nav_icon: "h-5 w-5",
+
+                        month: "mt-2",
+                        weeknumber: "text-gray-900",
+                        head_cell:
+                          "flex text-blue-800 text-md justify-center m-auto",
+                        day_range_middle: "bg-blue-100",
+                      }
+                    : {}
+                }
                 disabled={(date) => {
                   return !medico?.diasLaborales.includes(date.getDay());
                 }}
               />
             </div>
             <div className="flex flex-col justify-center">
-              {/* poner un mensaje que indique que deben llegar 15 minutos antes de preferencia  */}
-
               <label
                 htmlFor="hora"
-                className="block mb-2 font-medium text-gray-700 text-left text-xl"
+                className="block mb-2 font-medium text-gray-800 text-left text-xl"
               >
-                Hora: {hora} : 00
+                <Clock9 /> {hora} : 00
               </label>
-
               <Slider
                 value={hora}
                 onValueChange={setHora}
@@ -275,23 +298,20 @@ const Appointments = () => {
               />
               <label
                 htmlFor="hora"
-                className="block mt-2 font-medium text-left text-red-400 text-sm"
+                className="block mt-2 font-medium text-left text-red-700 text-sm"
               >
-                *LLegar 15 minutos antes de preferencia
+                *Llegar 15 minutos antes de preferencia
               </label>
             </div>
           </CardContent>
         </Card>
         <Button
-          className="bg-blue-600 text-white rounded-md px-4 py-2 mt-4"
+          className="bg-blue-600 text-white rounded-md px-4 py-2 mt-4 hover:bg-blue-700"
           onClick={() => {
             handleReservar();
             toast({
-              title: "Scheduled: Catch up ",
-              description: "Friday, February 10, 2023 at 5:57 PM",
-              action: (
-                <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
-              ),
+              title: "Cita reservada",
+              description: "Consulta programada correctamente.",
             });
           }}
         >

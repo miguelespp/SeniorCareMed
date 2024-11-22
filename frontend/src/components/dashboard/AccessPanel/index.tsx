@@ -44,55 +44,78 @@ const SheetAccess = () => {
     <>
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline" className="mr-2">
+          <Button
+            variant="outline"
+            className="mr-2 bg-gray-200 hover:bg-gray-300 focus:outline-blue-500 border border-gray-400"
+          >
             <Settings2 />
           </Button>
         </SheetTrigger>
-        <SheetContent>
-          <SheetTitle>Configuración</SheetTitle>
-          <div className="grid gap-4 py-4">
+        <SheetContent
+          className={`p-6 rounded-lg shadow-lg ${
+            config.altoContraste
+              ? "bg-black text-white border border-gray-300"
+              : "bg-gray-100 text-gray-800"
+          }`}
+        >
+          <SheetTitle
+            className={`text-lg font-bold mb-4 ${config.altoContraste ? "text-white" : "text-black"}`}
+          >
+            Configuración
+          </SheetTitle>
+          <div className="grid gap-6">
+            {/* Alto Contraste */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
+              <Label
+                htmlFor="alto-contraste"
+                className="text-right font-medium"
+              >
                 Alto contraste
               </Label>
               <Switch
-                id="name"
+                id="alto-contraste"
                 checked={config.altoContraste}
                 onCheckedChange={handleSwitchChange}
+                className="focus:outline-blue-500"
               />
             </div>
+
+            {/* Tamaño del Texto */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
+              <Label htmlFor="font-size" className="text-right font-medium">
                 Tamaño del Texto
               </Label>
               <Select
                 value={config.fontSize}
                 onValueChange={handleSelectChange}
               >
-                <SelectTrigger className="w-36">
+                <SelectTrigger className="w-36 bg-gray-200 hover:bg-gray-300 focus:outline-blue-500 border border-gray-400 rounded-md">
                   <SelectValue placeholder="Seleccionar una opción" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white shadow-lg rounded-md">
                   <SelectItem value="Normal">Normal</SelectItem>
                   <SelectItem value="Grande">Grande</SelectItem>
                   <SelectItem value="Muy Grande">Muy Grande</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-            <div>
+
+            {/* Asistente de Voz */}
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label
-                htmlFor="username"
-                className="text-right"
+                htmlFor="asistente-voz"
+                className="text-right font-medium"
                 onMouseEnter={() =>
-                  speakText("Un asistente para navegar por la pagina")
+                  speakText("Un asistente para navegar por la página")
                 }
               >
                 Asistente de Voz
               </Label>
               <Switch
-                id="username"
+                id="asistente-voz"
                 checked={config.auxVoz}
                 onCheckedChange={handleVozChange}
+                className="focus:outline-blue-500"
               />
             </div>
           </div>

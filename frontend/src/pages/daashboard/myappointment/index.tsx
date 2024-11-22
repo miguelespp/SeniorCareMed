@@ -65,7 +65,9 @@ const MyAppointments = () => {
           <CardContent>
             <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-lg overflow-hidden">
               <thead>
-                <tr className="bg-blue-600 text-white">
+                <tr
+                  className={`${config.altoContraste ? "bg-blue-900 text-white" : "bg-blue-700 text-white"}`}
+                >
                   <th className="p-4">Fecha</th>
                   <th className="p-4">Especialidad</th>
                   <th className="p-4">Médico</th>
@@ -104,7 +106,7 @@ const MyAppointments = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={4} className="p-4 text-center text-gray-600">
+                    <td colSpan={4} className="p-4 text-center text-gray-800">
                       No tienes citas reservadas.
                     </td>
                   </tr>
