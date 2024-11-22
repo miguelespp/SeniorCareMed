@@ -19,12 +19,13 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { KeyRound, Mail } from "lucide-react";
+import { CircleUser, KeyRound, Mail } from "lucide-react";
 import bg from "@/assets/image.png";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Api } from "@/services/Api";
 
 const formSchema = z.object({
-  email: z.string().email(),
+  username: z.string(),
   password: z.string().min(6),
 });
 
@@ -32,23 +33,20 @@ const Login = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
   const navigate = useNavigate();
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    const { email, password } = data;
-    // const res = await fetch("/api/auth/login", {
-    // 	method: "POST",
-    // 	body: JSON.stringify({ email, password }),
-    // 	headers: {
-    // 		"Content-Type": "application/json",
-    // 	},
-    // });
-    // const resJson = await res.json();
-    navigate("/dashboard");
+    console.log(data);
+    const res = await Api.post("/token", data);
+
+    if (res.status === 200) {
+      localStorage.setItem("token", res.data.token);
+      navigate("/dashboard");
+    }
   };
 
   return (
@@ -71,11 +69,11 @@ const Login = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
                 control={form.control}
-                name="email"
+                name="username"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="flex items-center space-x-2">
-                      <Mail />
+                      <CircleUser />
                       <span>Username</span>
                     </FormLabel>
                     <FormControl>
