@@ -41,11 +41,12 @@ const MyAppointments = () => {
         <Card className="mb-8 h-fit">
           <CardHeader className="py-4">
             <CardTitle className="flex justify-between">
-              <p
+              <h2
                 className={`text-center content-center ${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-3xl" : "text-4xl"}`}
+                onMouseEnter={() => speakText("Panel de Mis Citas Médicas")}
               >
                 Panel de Mis Citas Médicas
-              </p>
+              </h2>
               <div className="flex">
                 <SheetAccess />
                 <CircleUser className="size-8" />
@@ -58,6 +59,7 @@ const MyAppointments = () => {
           <CardHeader>
             <CardTitle
               className={`${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-3xl" : "text-4xl"}`}
+              onMouseEnter={() => speakText("Mis Citas Reservadas")}
             >
               Mis Citas Reservadas
             </CardTitle>
@@ -89,7 +91,7 @@ const MyAppointments = () => {
                       <td className="p-4 space-x-2 flex justify-center">
                         <Button
                           onClick={() => handleEditar(cita.id)}
-                          className="flex items-center bg-yellow-500 hover:bg-yellow-600 text-white rounded-md px-3 py-2"
+                          className="flex items-center bg-yellow-700 hover:bg-yellow-600 text-white rounded-md px-3 py-2"
                         >
                           {/* <PencilIcon className="h-5 w-5 mr-1" /> */}
                           <PencilLine />

@@ -45,7 +45,9 @@ const SheetAccess = () => {
       <Sheet>
         <SheetTrigger asChild>
           <Button
+            name="accessPanel"
             variant="outline"
+            aria-label="Configuración"
             className="mr-2 bg-gray-200 hover:bg-gray-300 focus:outline-blue-500 border border-gray-400"
           >
             <Settings2 />

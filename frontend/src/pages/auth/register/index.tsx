@@ -69,7 +69,7 @@ const Register = () => {
 
   return (
     <div
-      className="flex items-center justify-center min-h-screen bg-gray-100"
+      className="flex items-center justify-center min-h-screen bg-gray-700"
       style={{
         backgroundImage: "url(./src/assets/image.png)",
         backgroundPosition: "center",
@@ -93,7 +93,7 @@ const Register = () => {
                     <FormItem>
                       <FormLabel className="flex items-center space-x-2">
                         <CircleUser />
-                        <span>Usename</span>
+                        <span>Nombre de usuario</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="text" placeholder="John Doe" {...field} />
@@ -110,7 +110,7 @@ const Register = () => {
                     <FormItem>
                       <FormLabel className="flex items-center space-x-2">
                         <Mail />
-                        <span>Email</span>
+                        <span>Correo</span>
                       </FormLabel>
                       <FormControl>
                         <Input
@@ -133,7 +133,7 @@ const Register = () => {
                     <FormItem>
                       <FormLabel className="flex items-center space-x-2">
                         <AlignLeft />
-                        <span>FirstName</span>
+                        <span>Nombres</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="text" placeholder="John Doe" {...field} />
@@ -150,7 +150,7 @@ const Register = () => {
                     <FormItem>
                       <FormLabel className="flex items-center space-x-2">
                         <AlignRight />
-                        <span>Last Name</span>
+                        <span>Apellidos</span>
                       </FormLabel>
                       <FormControl>
                         <Input type="text" placeholder="John Doe" {...field} />
@@ -170,7 +170,7 @@ const Register = () => {
                     <FormItem>
                       <FormLabel className="flex items-center space-x-2">
                         <KeyRound />
-                        <span>Password</span>
+                        <span>Contraseña</span>
                       </FormLabel>
                       <FormControl>
                         <Input
@@ -191,7 +191,7 @@ const Register = () => {
                     <FormItem>
                       <FormLabel className="flex items-center space-x-2">
                         <KeyRound />
-                        <span>Confirm Password</span>
+                        <span>Confirma Contraseña</span>
                       </FormLabel>
                       <FormControl>
                         <Input

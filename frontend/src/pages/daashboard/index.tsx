@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CircleUser, Settings2 } from "lucide-react";
+import { CircleUser } from "lucide-react";
 import useCitaStore from "@/store/data/citas";
 import { useConfig } from "@/store/config";
 import SheetAccess from "@/components/dashboard/AccessPanel";
@@ -17,11 +17,11 @@ const DashboardIndex = () => {
         <Card className="mb-8 h-fit">
           <CardHeader className="py-4">
             <CardTitle className="flex justify-between">
-              <p
+              <h2
                 className={`text-center content-center ${config.fontSize === "Normal" ? "" : config.fontSize === "Grande" ? "text-3xl" : "text-4xl"}`}
               >
                 Panel de Mis Citas Médicas
-              </p>
+              </h2>
               <div className="flex">
                 <SheetAccess />
                 <CircleUser className="size-8" />

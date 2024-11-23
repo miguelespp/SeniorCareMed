@@ -1,7 +1,5 @@
 import { create } from "zustand";
 
-enum Turnos {}
-
 type Cita = {
   id: number;
   fecha: Date;

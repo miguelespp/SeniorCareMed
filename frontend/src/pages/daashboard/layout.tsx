@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 const DashLayout = () => {
   return (
     <>
-      {/* <RequireAuth /> */}
+      <RequireAuth />
       <div className="flex h-screen">
         <NavBar />
         <main className="flex-1">

@@ -30,7 +30,6 @@ import { Calendar } from "@/components/ui/calendar";
 import useMedicoStore from "@/store/data/medicos";
 import type { Medico } from "@/store/data/medicos";
 import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "@/components/ui/toast";
 import { Slider } from "@/components/ui/slider";
 import { speakTextCustom } from "@/lib/queueVoice";
 
@@ -94,11 +93,11 @@ const Appointments = () => {
       {/* Contenido Principal */}
       <main className="flex-1 p-8">
         <Card
-          className={`mb-8 h-fit ${config.altoContraste ? "bg-gray-800 text-white " : ""} rounded-lg shadow-lg`}
+          className={`mb-8 h-fit ${config.altoContraste ? "" : ""} rounded-lg shadow-lg`}
         >
           <CardHeader className="py-4">
             <CardTitle className="flex justify-between">
-              <p
+              <h2
                 className={`text-center content-center ${
                   config.fontSize === "Normal"
                     ? "text-lg"
@@ -111,7 +110,7 @@ const Appointments = () => {
                 }
               >
                 Panel de Reserva de Citas Médicas
-              </p>
+              </h2>
               <div className="flex">
                 <SheetAccess />
                 <CircleUser className="size-8" />
@@ -198,6 +197,7 @@ const Appointments = () => {
                       <Button
                         className="size-fit p-0 bg-white hover:bg-gray-100"
                         onClick={() => setEspecialidad("Cardiología")}
+                        aria-label="Cardiología"
                       >
                         <Card
                           className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-blue-500 hover:bg-blue-600 flex-1"
@@ -213,6 +213,7 @@ const Appointments = () => {
                       <Button
                         className="size-fit p-0 bg-white"
                         onClick={() => setEspecialidad("Pediatría")}
+                        aria-label="Pediatría"
                       >
                         <Card
                           className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-gray-500 hover:bg-gray-600 flex-1"
@@ -228,6 +229,7 @@ const Appointments = () => {
                       <Button
                         className="size-fit p-0 bg-white"
                         onClick={() => setEspecialidad("Traumatismo")}
+                        aria-label="Traumatismo"
                       >
                         <Card
                           className="w-60 max-w-md p-2 shadow-lg rounded-lg bg-green-400 hover:bg-green-600 flex-1"
@@ -255,6 +257,7 @@ const Appointments = () => {
                   <SelectTrigger
                     className="w-fit self-center bg-gray-100 border border-gray-400 focus:outline-blue-500 hover:bg-gray-200"
                     onMouseEnter={() => speak("Seleccione un doctor")}
+                    aria-label="Seleccione un doctor"
                   >
                     <SelectValue
                       placeholder={medico?.name || "Seleccionar una opción"}
@@ -293,7 +296,7 @@ const Appointments = () => {
                   config.altoContraste
                     ? {
                         day: "h-10 w-10 p-0 font-normal",
-                        day_selected: "bg-gray-500 text-white",
+                        day_selected: "bg-gray-300 text-white",
                         day_today: "border border-blue-500 text-white",
                         day_outside: "text-gray-700",
                         day_disabled: "text-gray-500 cursor-not-allowed",
@@ -328,7 +331,7 @@ const Appointments = () => {
                 max={medico?.horaFin || 18}
                 step={1}
                 disabled={!medico}
-                className="mt-4 w-32"
+                className="mt-4 w-64"
               />
               <label
                 htmlFor="hora"
@@ -348,6 +351,7 @@ const Appointments = () => {
               description: "Consulta programada correctamente.",
             });
           }}
+          aria-label="Reservar"
         >
           Reservar
         </Button>

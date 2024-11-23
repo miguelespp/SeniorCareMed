@@ -19,9 +19,8 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { CircleUser, KeyRound, Mail } from "lucide-react";
-import bg from "@/assets/image.png";
-import { Navigate, useNavigate } from "react-router-dom";
+import { CircleUser, KeyRound } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Api } from "@/services/Api";
 
 const formSchema = z.object({
@@ -50,14 +49,7 @@ const Login = () => {
   };
 
   return (
-    <div
-      className="flex items-center justify-center min-h-screen bg-gray-100"
-      style={{
-        backgroundImage: `${bg.src}`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-      }}
-    >
+    <div className="flex items-center justify-center min-h-screen bg-gray-700">
       <Card className="w-full max-w-md p-8 shadow-lg rounded-lg bg-white">
         <CardHeader className="mb-4 text-center">
           <CardTitle className="text-2xl font-bold text-gray-800">

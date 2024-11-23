@@ -73,6 +73,23 @@ export default function NavBar() {
           Mis Citas
         </Link>
       </nav>
+
+      <Link
+        to={"/auth/login"}
+        className={`mt-80 block px-4 py-2 rounded-md transition-all ${
+          config.altoContraste
+            ? "text-white bg-gray-800 hover:bg-gray-700"
+            : "text-gray-800 hover:bg-blue-100"
+        } ${
+          config.fontSize === "Normal"
+            ? "text-base"
+            : config.fontSize === "Grande"
+              ? "text-lg"
+              : "text-xl"
+        }`}
+      >
+        LogOut
+      </Link>
     </aside>
   );
 }
