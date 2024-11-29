@@ -1,11 +1,9 @@
 # mi_api/urls.py
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import DoctorViewSet
-
-router = DefaultRouter()
-router.register(r'', DoctorViewSet)
+from .views import DoctorBySpecialtyViewSet, DoctorViewSet, SpecialtyViewSet
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('doctors/', DoctorViewSet.as_view(), name='doctor-list'),
+    path('doctors/<str:specialty>/', DoctorBySpecialtyViewSet.as_view(), name='doctor-by-specialty'),
+    path('specialties/', SpecialtyViewSet.as_view(), name='specialty-list'),
 ]
