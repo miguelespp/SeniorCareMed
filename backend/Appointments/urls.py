@@ -1,11 +1,10 @@
 # mi_api/urls.py
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import AppointmentViewSet
+from .views import AppointmentList, AppointmentCreate, AppointmentDetail
 
-router = DefaultRouter()
-router.register(r'', AppointmentViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('appointments/', AppointmentList.as_view(), name='appointment-list'),
+    path('appointments/create/', AppointmentCreate.as_view(), name='appointment-create'),
+    path('appointments/<int:pk>/', AppointmentDetail.as_view(), name='appointment-detail'),
 ]

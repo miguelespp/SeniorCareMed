@@ -8,6 +8,7 @@ class Appointment(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=False, blank=False)
     reason = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False)
+    diagnosis = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.reason
