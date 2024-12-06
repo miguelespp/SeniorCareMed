@@ -91,7 +91,7 @@ const SheetAccess = () => {
                 value={config.fontSize}
                 onValueChange={handleSelectChange}
               >
-                <SelectTrigger className="w-36 bg-gray-200 hover:bg-gray-300 focus:outline-blue-500 border border-gray-400 rounded-md">
+                <SelectTrigger className="w-36 bg-gray-200 hover:bg-gray-300 focus:outline-blue-500 border border-gray-400 rounded-md text-black">
                   <SelectValue placeholder="Seleccionar una opción" />
                 </SelectTrigger>
                 <SelectContent className="bg-white shadow-lg rounded-md">

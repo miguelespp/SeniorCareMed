@@ -142,8 +142,7 @@ const Appointments = () => {
                     : "text-xl"
               }`}
             >
-              Con el objetivo de brindar una mejor atención en consulta externa,
-              el sistema solo permitirá reservar una cita por día.
+              Selecciona la especialidad y el médico de tu preferencia
             </p>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -296,7 +295,7 @@ const Appointments = () => {
                   config.altoContraste
                     ? {
                         day: "h-10 w-10 p-0 font-normal",
-                        day_selected: "bg-gray-300 text-white",
+                        day_selected: "bg-gray-800 text-white",
                         day_today: "border border-blue-500 text-white",
                         day_outside: "text-gray-700",
                         day_disabled: "text-gray-500 cursor-not-allowed",
@@ -307,7 +306,7 @@ const Appointments = () => {
                         month: "mt-2",
                         weeknumber: "text-gray-900",
                         head_cell:
-                          "flex text-blue-800 text-md justify-center m-auto",
+                          "flex text-blue-400 text-md justify-center m-auto",
                         day_range_middle: "bg-blue-100",
                       }
                     : {}
@@ -335,7 +334,7 @@ const Appointments = () => {
               />
               <label
                 htmlFor="hora"
-                className="block mt-2 font-medium text-left text-red-700 text-sm"
+                className="block mt-2 font-medium text-left text-orange-800 text-sm"
               >
                 *Llegar 15 minutos antes de preferencia
               </label>

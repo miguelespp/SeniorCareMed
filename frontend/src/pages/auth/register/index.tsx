@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Api } from "@/services/Api";
+import { cn } from "@/lib/utils";
 
 const formSchema = z
   .object({
@@ -58,6 +59,8 @@ const Register = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    const token = localStorage.getItem("token");
+    console.log(token);
     // quiero usar todos los campos menos confirmPassword
     const { confirmPassword, ...req } = data;
     const res = await Api.post("/register", req);
