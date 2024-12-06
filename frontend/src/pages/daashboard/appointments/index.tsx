@@ -32,6 +32,7 @@ import type { Medico } from "@/store/data/medicos";
 import { useToast } from "@/hooks/use-toast";
 import { Slider } from "@/components/ui/slider";
 import { speakTextCustom } from "@/lib/queueVoice";
+import { ToastAction } from "@/components/ui/toast";
 
 const Appointments = () => {
   const [especialidad, setEspecialidad] = useState<string>("");
@@ -156,7 +157,7 @@ const Appointments = () => {
                         : "text-xl"
                   }`}
                 >
-                  <span>Especialidad</span> <GraduationCap />
+                  <span>Especialidad</span> <GraduationCap onMouseEnter={() => speak('seleccione la especialidad')} />
                 </label>
                 <Dialog>
                   <DialogTrigger asChild>
@@ -250,7 +251,7 @@ const Appointments = () => {
                   htmlFor="medico"
                   className="flex space-x-2 justify-center mb-2 font-medium text-gray-900"
                 >
-                  <span>Médicos</span> <Stethoscope />
+                  <span>Médicos</span> <Stethoscope onMouseEnter={() => speak('selecciona el doctor de su preferencia')} />
                 </label>
                 <Select onValueChange={HandleMedicoChange}>
                   <SelectTrigger
@@ -283,7 +284,7 @@ const Appointments = () => {
           <CardContent className="flex justify-around">
             <div className="mt-4">
               <p className="flex space-x-2 justify-center text-gray-800 font-medium">
-                <span>Horarios Disponibles</span> <Calendar1 />
+                <span>Horarios Disponibles</span> <Calendar1 onMouseEnter={() => speak('Seleccione una de las fechas disponibles')} />
               </p>
               <Calendar
                 mode="single"
@@ -321,7 +322,7 @@ const Appointments = () => {
                 htmlFor="hora"
                 className="block mb-2 font-medium text-gray-800 text-left text-xl"
               >
-                <Clock9 /> {hora} : 00
+                <Clock9 onMouseEnter={() => speak('Seleccione la hora de su preferencia')} /> {hora} : 00
               </label>
               <Slider
                 value={hora}

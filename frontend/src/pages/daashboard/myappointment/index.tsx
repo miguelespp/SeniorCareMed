@@ -89,14 +89,7 @@ const MyAppointments = () => {
                           ?.name || "no encontrado"}
                       </td>
                       <td className="p-4 space-x-2 flex justify-center">
-                        <Button
-                          onClick={() => handleEditar(cita.id)}
-                          className="flex items-center bg-yellow-700 hover:bg-yellow-600 text-white rounded-md px-3 py-2"
-                        >
-                          {/* <PencilIcon className="h-5 w-5 mr-1" /> */}
-                          <PencilLine />
-                          Editar
-                        </Button>
+                        
                         <Button
                           onClick={() => handleCancelar(cita.id)}
                           className="flex items-center bg-red-600 hover:bg-red-700 text-white rounded-md px-3 py-2"
