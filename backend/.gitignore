@@ -1,6 +1,12 @@
 # Created by https://www.toptal.com/developers/gitignore/api/django
 # Edit at https://www.toptal.com/developers/gitignore?templates=django
 
+
+# Ignorar migraciones de Django
+*/migrations/
+!*/migrations/__init__.py
+
+
 .idea
 pyrightconfig.json
 
